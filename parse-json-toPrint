@@ -1,0 +1,24 @@
+"""In this exxample, we try to get JSON from URL and bring only 2 elements of it.
+First element is on level one and named 'q', this brings a product code.
+Second element is the keys under 1st level element va and we nee the key of it. In other words, we need the keys under element 'va'
+I have used inner for loops for it.
+Some of the objects don't have va element so I get KeyError, that's why I added if statement
+"""
+
+import urllib.request, json 
+with urllib.request.urlopen("https://hezarfen.listinguish.com:1322/yourproducts?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3VudHJ5IjoidHIiLCJlbWFpbCI6ImRpZ2l0YWxAbGluZW55YS5jb20iLCJsYW5ndWFnZSI6InRyIiwicGFydG5lcl9pZCI6IjVmMDAyZjAzZGE5YWUzNjZmZWJmMmE2NCJ9.Hops4uxr5vZHewg8dOGTD0EaWljMV9rWmSAiDss4cHI&_=1596808210180") as url:
+    data = json.loads(url.read().decode())
+    
+
+myList=[]
+myDict={}
+for i in data['data']:
+    myList.append(i)   
+
+#print(myList[0]['va'])
+for x in myList:
+    if 'va' in x:
+        for y in x['va']:
+            print(str(x['q']) + "-" +str(y))
+    else:
+        print(str(x['q']) + "-" +str(y)) 
